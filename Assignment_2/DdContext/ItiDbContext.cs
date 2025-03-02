@@ -26,6 +26,7 @@ namespace Assignement_2.DdContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=YOUSSEF\\SQLSERVER;Database=iti;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

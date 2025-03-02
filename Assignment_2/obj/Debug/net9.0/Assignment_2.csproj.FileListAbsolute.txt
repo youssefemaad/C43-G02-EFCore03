@@ -292,3 +292,8 @@ D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignm
 D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\obj\Debug\net9.0\Assignment_2.genruntimeconfig.cache
 D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\obj\Debug\net9.0\ref\Assignment_2.dll
 D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\obj\Debug\net9.0\Assignment_2.sourcelink.json
+D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\bin\Debug\net9.0\Castle.Core.dll
+D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Proxies.dll
+D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\bin\Debug\net9.0\System.Diagnostics.EventLog.dll
+D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll
+D:\Youssef\Projects\Routes_Course\Entity Framwork\Ass_3\C43-G02-EFCore03\Assignment_2\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll

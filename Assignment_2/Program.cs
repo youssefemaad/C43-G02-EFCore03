@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using Assignement_2.DdContext;
 using Assignement_2.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assignement_2
@@ -16,84 +14,32 @@ namespace Assignement_2
             using ItiDbContext dbContext = new ItiDbContext();
 
             #region Insert Data
-            var students = new List<Student>
-            {
-                new Student { ID = 1, FName = "John", LName = "Doe", Address = "123 Elm St", Age =20, DepartmentId = 10 },
-                new Student { ID = 2, FName = "Jane", LName = "Smith", Address = "456 Oak St", Age = 21, DepartmentId = 20 }
-            };
-
-            var courses = new List<Course>
-            {
-                new Course { ID = 100 , Duration = 20, Name = "Math", Description = "Mathematics", Top_ID = 1000 },
-                new Course { ID = 200 , Duration = 30, Name = "Science", Description = "Science", Top_ID = 2000 }
-            };
-
-            var instructors = new List<Instructor>
-            {
-                new Instructor {Inst_ID = 1, Name = "Dr. Brown" },
-                new Instructor {Inst_ID = 2, Name = "Prof. Green" }
-            };
-
-            var departments = new List<Department>
-            {
-                new Department { ID = 10, Name = "CS", Ins_ID = 1 , HiringDate = DateTime.Now },
-                new Department { ID = 20, Name = "IT", Ins_ID = 2 , HiringDate = DateTime.Now }
-            };
-
-            var studentCourses = new List<Student_Course>
-            {
-                new Student_Course { Student_ID = 1, Course_ID = 100, Grade = "Good" },
-                new Student_Course { Student_ID = 2, Course_ID = 200, Grade = "Very Good" }
-            };
+            Student students = new Student { FName = "Ahmed", LName = "Ali", Address = "Cairo", Age = 20, DepartmentId = 1 };
 
 
-            var courseInstructors = new List<Course_Inst>
-            {
-                new Course_Inst { Course_ID = 100, Inst_ID = 1, Evaluate = "Good" },
-                new Course_Inst { Course_ID = 200, Inst_ID = 2, Evaluate = "Excellent" }
-            };
+            Course courses = new Course { Duration = 20, Name = "Math", Description = "Mathematics", Top_ID = 1000 };
 
-            dbContext.Students.AddRange(students);
+
+            Instructor instructors = new Instructor { Name = "Dr. Brown" };
+
+            Department departments = new Department { Name = "CS", Ins_ID = 1, HiringDate = DateTime.Now };
+
+            dbContext.Students.Add(students);
             dbContext.Courses.AddRange(courses);
             dbContext.Instructors.AddRange(instructors);
             dbContext.Departments.AddRange(departments);
-            dbContext.StudentCourses.AddRange(studentCourses);
-            dbContext.CourseInstructors.AddRange(courseInstructors);
-
             dbContext.SaveChanges();
-            #endregion
 
-            #region Update Data
-            // Update example
-            var studentToUpdate = dbContext.Students.FirstOrDefault(s => s.FName == "John");
-            if (studentToUpdate != null)
-            {
-                studentToUpdate.LName = "UpdatedDoe";
-                dbContext.SaveChanges();
-            }
-            #endregion
+            Student_Course studentCourses = new Student_Course { Student_ID = students.ID, Course_ID = courses.ID, Grade = "Good" };
+            Course_Inst course_inst = new Course_Inst { Course_ID = courses.ID, Inst_ID = instructors.Inst_ID, Evaluate = "Good" };
 
-            #region Delete Data
-            // Delete example
-            var studentToDelete = dbContext.Students.FirstOrDefault(s => s.FName == "Jane");
-            if (studentToDelete != null)
-            {
-                dbContext.Students.Remove(studentToDelete);
-                dbContext.SaveChanges();
-            }
-            #endregion
+            dbContext.StudentCourses.Add(studentCourses);
+            dbContext.CourseInstructors.Add(course_inst);
+            dbContext.SaveChanges();
 
-            #region Select Data
-            // Select example
-            var allStudents = dbContext.Students.ToList();
-            foreach (var student in allStudents)
-            {
-                Console.WriteLine($"{student.FName} {student.LName}");
-            }
             #endregion
 
             #region Retrieve Data with Eager Loading
-
             var studentsWithCourses = dbContext.Students
                 .Include(s => s.StudentCourses)
                 .ThenInclude(sc => sc.Course)
@@ -109,13 +55,20 @@ namespace Assignement_2
             }
             #endregion
 
-            #region Retrieve Data with Lazy Loading
+            #region Retrieve Data with Explicit Loading
 
-            var lazyStudent = dbContext.Students.FirstOrDefault(s => s.FName == "John");
-            if (lazyStudent != null)
+            var studentsWithCoursesExplicit = dbContext.Students.ToList();
+
+            foreach (var student in studentsWithCoursesExplicit)
             {
-                Console.WriteLine($"{lazyStudent.FName} {lazyStudent.LName} is enrolled in:");
-                foreach (var sc in lazyStudent.StudentCourses)
+                dbContext.Entry(student)
+                    .Collection(s => s.StudentCourses)
+                    .Query()
+                    .Include(sc => sc.Course)
+                    .Load();
+
+                Console.WriteLine($"{student.FName} {student.LName} is enrolled in:");
+                foreach (var sc in student.StudentCourses)
                 {
                     Console.WriteLine($" - {sc.Course.Name}");
                 }
