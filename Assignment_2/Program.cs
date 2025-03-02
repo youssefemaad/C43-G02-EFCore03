@@ -36,21 +36,21 @@ namespace Assignement_2
 
             var departments = new List<Department>
             {
-                new Department { ID = 10, Name = "CS", Inst_ID = 1 , HiringDate = DateTime.Now },
-                new Department { ID = 20, Name = "IT", Inst_ID = 2 , HiringDate = DateTime.Now }
+                new Department { ID = 10, Name = "CS", Ins_ID = 1 , HiringDate = DateTime.Now },
+                new Department { ID = 20, Name = "IT", Ins_ID = 2 , HiringDate = DateTime.Now }
             };
 
             var studentCourses = new List<Student_Course>
             {
-                new Student_Course { StudentId = 1, CourseId = 100, Grade = 80 },
-                new Student_Course { StudentId = 2, CourseId = 200, Grade = 90 }
+                new Student_Course { Student_ID = 1, Course_ID = 100, Grade = "Good" },
+                new Student_Course { Student_ID = 2, Course_ID = 200, Grade = "Very Good" }
             };
 
 
             var courseInstructors = new List<Course_Inst>
             {
-                new Course_Inst { CourseId = 100, InstId = 1, Evaluate = "Good" },
-                new Course_Inst { CourseId = 200, InstId = 2, Evaluate = "Excellent" }
+                new Course_Inst { Course_ID = 100, Inst_ID = 1, Evaluate = "Good" },
+                new Course_Inst { Course_ID = 200, Inst_ID = 2, Evaluate = "Excellent" }
             };
 
             dbContext.Students.AddRange(students);
@@ -93,7 +93,7 @@ namespace Assignement_2
             #endregion
 
             #region Retrieve Data with Eager Loading
-            // Eager loading example
+
             var studentsWithCourses = dbContext.Students
                 .Include(s => s.StudentCourses)
                 .ThenInclude(sc => sc.Course)
@@ -110,7 +110,7 @@ namespace Assignement_2
             #endregion
 
             #region Retrieve Data with Lazy Loading
-            // Lazy loading example
+
             var lazyStudent = dbContext.Students.FirstOrDefault(s => s.FName == "John");
             if (lazyStudent != null)
             {
