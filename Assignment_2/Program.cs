@@ -39,6 +39,30 @@ namespace Assignement_2
 
             #endregion
 
+            #region Update Data
+            var studentToUpdate = dbContext.Students.FirstOrDefault(s => s.FName == "Ahmed");
+            studentToUpdate.FName = "Mohamed";
+            dbContext.SaveChanges();
+            #endregion
+
+            #region Delete Data
+
+            var studentToDelete = dbContext.Students.FirstOrDefault(s => s.FName == "Mohamed");
+            dbContext.Students.Remove(studentToDelete);
+            dbContext.SaveChanges();
+
+            #endregion
+
+            #region Select Data
+
+            var studentsList = dbContext.Students.ToList();
+            foreach (var student in studentsList)
+            {
+                Console.WriteLine($"{student.FName} {student.LName}");
+            }
+
+            #endregion
+
             #region Retrieve Data with Eager Loading
             var studentsWithCourses = dbContext.Students
                 .Include(s => s.StudentCourses)
